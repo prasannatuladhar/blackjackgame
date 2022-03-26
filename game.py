@@ -1,4 +1,6 @@
 import random
+import os
+from artwork import logo
 
 def deal_card():
     cards=[11,2,3,4,5,6,7,8,9,10,10,10,10]
@@ -36,27 +38,34 @@ def compare(user_score,computer_score):
         return "You Win !"    
                   
 
-user_wanna_continue = True
 
-while user_wanna_continue:
-    user_score = calculate_score(user_card_list)
-    computer_score = calculate_score(computer_card_list)
-    print(f"Your Cards are :{user_card_list} and Score:{user_score}" )
-    print(f"Computer's First Hands :{computer_card_list[0]}" )
-    if user_score==0 or computer_score==0 or user_score>21:
-        user_wanna_continue=False
-    else:    
-        user_reply = input("Do you wanna continue playing blackjack? Type 'y' to continue and 'n' to exit :")
-        if user_reply=='y':
-            user_card_list.append(deal_card())
-        else:
-            user_wanna_continue=False    
+
+def play_game():
+    user_wanna_continue = True
+    while user_wanna_continue:
+        user_score = calculate_score(user_card_list)
+        computer_score = calculate_score(computer_card_list)
+        print(f"Your Cards are :{user_card_list} and Score:{user_score}" )
+        print(f"Computer's First Hands :{computer_card_list[0]}" )
+        if user_score==0 or computer_score==0 or user_score>21:
+            user_wanna_continue=False
+        else:    
+            user_reply = input("Do you wanna pick other card? Type 'y' to continue and 'n' to exit :")
+            if user_reply=='y':
+                user_card_list.append(deal_card())
+            else:
+                user_wanna_continue=False    
+            
+    while computer_score !=0 and computer_score<17:
+        computer_card_list.append(deal_card())
+        computer_score = calculate_score(computer_card_list)
         
-while computer_score !=0 or computer_score<17:
-    computer_card_list.append(deal_card())
-    computer_score = calculate_score(computer_card_list)
-    
 
-print(f"Your Final cards are :{user_card_list} and Score:{user_score}" )
-print(f"Computer's Final Hands :{computer_card_list} and Score:{computer_score} " )
-print(compare(user_score,computer_score))
+    print(f"Your Final cards are :{user_card_list} and Score:{user_score}" )
+    print(f"Computer's Final Hands :{computer_card_list} and Score:{computer_score} " )
+    print(compare(user_score,computer_score))
+
+while input("Do you wanna play a game of Blackjack? Type 'y' to play or 'n' to exit :") =='y':
+    os.system("cls") 
+    print(logo)
+    play_game()
