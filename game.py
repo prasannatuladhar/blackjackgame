@@ -21,24 +21,29 @@ def calculate_score(cards):
         cards.append(1)    
     return sum(cards)
 
+user_win = False
 def compare(user_score,computer_score):
     if user_score==computer_score:
         return "Is a Draw!"
     elif computer_score==0:
+        user_win = False
         return "Computer's Black Jack! You lose"  
     elif user_score==0:
+        user_win = True
         return "Black Jack! You win :) "
     elif user_score>21:
+        user_win = False
         return "Your score Over 21. You lose"
     elif computer_score>21:
-        return "Computer score Over 21. You Win"  
+        user_win = True
+        return "Computer score Over 21. You Win"
     elif computer_score>user_score:
+        user_win = False
         return "Computer Win!"      
     else:
+        user_win = True
         return "You Win !"    
                   
-
-
 
 def play_game():
     user_wanna_continue = True
@@ -68,4 +73,9 @@ def play_game():
 while input("Do you wanna play a game of Blackjack? Type 'y' to play or 'n' to exit :") =='y':
     os.system("cls") 
     print(logo)
+    bet_amount = input("How much money do you wanna Bet?:  $")
     play_game()
+    if user_win== True:
+        print(f"Congratulation You have won ${bet_amount}")
+    else:
+        print(f"Sorry you lost ${bet_amount}. Try Again")    
